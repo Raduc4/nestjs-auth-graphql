@@ -8,8 +8,7 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { UsersModel, UserDocument as UserDocument } from './schema/user.schema';
 import { AuthService } from '../auth/auth.service';
-import { CreateUserInput, UpdateUserInput } from './dto/users-inputs.dto';
-import { MongoError } from 'mongodb';
+import { CreateUserInput } from './dto/users-inputs.dto';
 
 @Injectable()
 export class UsersService {

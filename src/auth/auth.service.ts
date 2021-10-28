@@ -1,18 +1,11 @@
 import {
-  BadRequestException,
   forwardRef,
   Inject,
   Injectable,
-  NotFoundException,
-  UseGuards,
+
 } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
-import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
-import { InjectModel } from '@nestjs/mongoose';
-import { randomBytes, scrypt as _scrypt } from 'crypto';
-import { promisify } from 'util';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { JwtPayload } from './interfaces/jwt-payload.interfaces';
 import { UsersModel, UserDocument } from '../users/schema/user.schema';
 import { LoginResult, LoginUserInput } from 'src/users/dto/users-inputs.dto';

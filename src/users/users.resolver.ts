@@ -20,7 +20,7 @@ export class UsersResolver {
     return await this.usersService.getAllUsers();
   }
 
-  @UseGuards(JwtAuthGuard, UsernameEmailAdminGuard)
+  @UseGuards(JwtAuthGuard)
   @Query(() => UsersModel)
   async user(@Args('email') email?: string): Promise<UsersModel> {
     let user: UsersModel | undefined;
@@ -46,5 +46,24 @@ export class UsersResolver {
       throw new UserInputError(error.message);
     }
     return createdUser;
+  }
+
+  // 'addAdminPermission';
+  @Mutation(() => UsersModel)
+  @UseGuards(JwtAuthGuard, AdminGuard)
+  async addAdminPermission(@Args('email') email: string): Promise<User> {
+    const user = await this.usersService.addPermission('admin', email);
+    if (!user) throw new UserInputError('The user does not exist');
+    return user;
+  }
+  // 'removeAdminPermission';
+  @Mutation(() => UsersModel)
+  @UseGuards(JwtAuthGuard, AdminGuard)
+  async removeAdminPermission(
+    @Args('username') username: string,
+  ): Promise<User> {
+    const user = await this.usersService.removePermission('admin', username);
+    if (!user) throw new UserInputError('The user does not exist');
+    return user;
   }
 }
