@@ -7,7 +7,6 @@ import * as bcrypt from 'bcryptjs';
 export type UserDocument = UsersModel &
   Document & {
     password: string;
-    lowercaseUsername: string;
     lowercaseEmail: string;
     passwordReset?: {
       token: string;
