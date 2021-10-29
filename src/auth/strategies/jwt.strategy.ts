@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 
@@ -20,7 +24,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     console.log(user);
 
     if (!user) {
-      throw new BadRequestException(
+      throw new UnauthorizedException(
         'Could not log-in with the provided credentials',
       );
     }

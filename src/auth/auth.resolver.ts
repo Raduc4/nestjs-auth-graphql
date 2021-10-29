@@ -7,7 +7,11 @@ import {
 import { AuthService } from './auth.service';
 
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { BadRequestException, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  UnauthorizedException,
+  UseGuards,
+} from '@nestjs/common';
 import { UsersModel, UserDocument } from '../users/schema/user.schema';
 
 type Login = {
@@ -36,12 +40,12 @@ export class AuthResolver {
   async refreshToken(@Context('req') request: any): Promise<string> {
     const user: UserDocument = request.user;
     if (!user)
-      throw new BadRequestException(
+      throw new UnauthorizedException(
         'Could not log-in with the provided credentials',
       );
     const result = await this.authService.createJwt(user);
     if (result) return result.token;
-    throw new BadRequestException(
+    throw new UnauthorizedException(
       'Could not log-in with the provided credentials',
     );
   }
