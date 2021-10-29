@@ -8,7 +8,7 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { UsersModel, UserDocument as UserDocument } from './schema/user.schema';
 import { AuthService } from '../auth/auth.service';
-import { CreateUserInput } from './dto/users-inputs.dto';
+import { CreateUserInput, LoginResult } from './dto/users-inputs.dto';
 
 @Injectable()
 export class UsersService {
@@ -26,16 +26,16 @@ export class UsersService {
    * @returns {Promise<UserDocument>} or throws an error
    * @memberof UsersService
    */
-  async create(createUserInput: CreateUserInput): Promise<UserDocument> {
+  async create(createUserInput: CreateUserInput): Promise<LoginResult> {
     const createdUser = new this.userModel(createUserInput);
-
+    const token = await this.authService.createJwt(createdUser);
     let user: UserDocument | undefined;
     try {
       user = await createdUser.save();
     } catch (error) {
       throw new BadRequestException(error);
     }
-    return user;
+    return { user, token: token.token };
   }
   // ---------------------------------------------------------
   /**
