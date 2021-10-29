@@ -1,9 +1,4 @@
-import {
-  forwardRef,
-  Inject,
-  Injectable,
-
-} from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './interfaces/jwt-payload.interfaces';
@@ -63,7 +58,7 @@ export class AuthService {
    *
    * @param {JwtPayload} payload
    * @returns {(Promise<UserDocument | undefined>)} returns undefined if there is no user or the account is not enabled
-   * @memberof AuthService
+   * @memberof {(AuthService JwtStrategy)}
    */
   async validateJwtPayload(
     payload: JwtPayload,

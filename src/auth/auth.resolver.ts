@@ -1,17 +1,7 @@
-import { Resolver, Args, Query, Context } from '@nestjs/graphql';
-import {
-  LoginResult,
-  LoginUserInput,
-  User,
-} from '../users/dto/users-inputs.dto';
+import { Resolver, Args, Query, Context, Mutation } from '@nestjs/graphql';
+import { LoginResult, LoginUserInput } from '../users/dto/users-inputs.dto';
 import { AuthService } from './auth.service';
-
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import {
-  BadRequestException,
-  UnauthorizedException,
-  UseGuards,
-} from '@nestjs/common';
+import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { UsersModel, UserDocument } from '../users/schema/user.schema';
 
 type Login = {
@@ -26,7 +16,6 @@ export class AuthResolver {
   @Query(() => LoginResult)
   async login(@Args('user') user: LoginUserInput): Promise<Login> {
     const result = await this.authService.validateUserByPassword(user);
-    console.log(result);
 
     if (result) return result;
     throw new BadRequestException(
@@ -36,7 +25,6 @@ export class AuthResolver {
 
   // There is no username guard here because if the person has the token, they can be any user
   @Query(() => String)
-  @UseGuards(JwtAuthGuard)
   async refreshToken(@Context('req') request: any): Promise<string> {
     const user: UserDocument = request.user;
     if (!user)

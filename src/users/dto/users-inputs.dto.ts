@@ -44,6 +44,14 @@ export class LoginResult {
   token: string;
 }
 
+@ObjectType()
+export class SignOutResult {
+  @Field(() => UsersModel)
+  user: UsersModel;
+  @Field(() => null)
+  token: null;
+}
+
 @InputType()
 export class User {
   @Field(() => String)
