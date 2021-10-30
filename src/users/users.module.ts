@@ -5,9 +5,11 @@ import { UsersResolver } from './users.resolver';
 import { AuthModule } from '../auth/auth.module';
 import { UsersModel, UsersSchema } from './schema/user.schema';
 import { PassportModule } from '@nestjs/passport';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule,
     forwardRef(() => AuthModule),
     MongooseModule.forFeature([{ name: UsersModel.name, schema: UsersSchema }]),
   ],
