@@ -31,8 +31,6 @@ export class UsersService {
   async create(createUserInput: CreateUserInput): Promise<LoginResult> {
     const createdUser = new this.userModel(createUserInput);
     const token = await this.authService.createJwt(createdUser);
-    const st = this.config.get('CONFIG');
-    console.log(st);
     let user: UserDocument | undefined;
     try {
       user = await createdUser.save();
