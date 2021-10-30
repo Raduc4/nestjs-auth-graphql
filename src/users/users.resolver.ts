@@ -21,7 +21,6 @@ export class UsersResolver {
     } catch (error) {
       throw new UserInputError(error.message);
     }
-    console.log(createdUser);
     return createdUser;
   }
 }

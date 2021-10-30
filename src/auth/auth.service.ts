@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './interfaces/jwt-payload.interfaces';
 import { UsersModel, UserDocument } from '../users/schema/user.schema';
 import { LoginResult, LoginUserInput } from 'src/users/dto/users-inputs.dto';
+import { ConfigService } from '../config/config.service';
 
 @Injectable()
 export class AuthService {
@@ -11,6 +12,7 @@ export class AuthService {
     @Inject(forwardRef(() => UsersService))
     private _usersService: UsersService,
     private _jwtService: JwtService,
+    private configService: ConfigService,
   ) {}
 
   async validateUserByPassword(
@@ -77,7 +79,7 @@ export class AuthService {
   }
 
   createJwt(user: UsersModel): { data: JwtPayload; token: string } {
-    const expiresIn = 60;
+    const expiresIn = this.configService.jwtExpiresIn;
     let expiration: Date | undefined;
     if (expiresIn) {
       expiration = new Date();

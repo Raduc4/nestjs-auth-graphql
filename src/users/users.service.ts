@@ -9,10 +9,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { UsersModel, UserDocument as UserDocument } from './schema/user.schema';
 import { AuthService } from '../auth/auth.service';
 import { CreateUserInput, LoginResult } from './dto/users-inputs.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class UsersService {
   constructor(
+    private readonly config: ConfigService,
     @InjectModel(UsersModel.name) private userModel: Model<UserDocument>,
     @Inject(forwardRef(() => AuthService))
     private authService: AuthService,
