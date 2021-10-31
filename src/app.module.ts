@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
+import { OrdersModule } from './orders/orders.module';
 @Module({
   imports: [
     MongooseModule.forRootAsync({
@@ -25,6 +26,7 @@ import { ConfigService } from './config/config.service';
     AuthModule,
     UsersModule,
     ConfigModule,
+    OrdersModule,
   ],
   providers: [],
 })
